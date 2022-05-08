@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% macro render_field(field) %}
+    <tr>
+    <td>{{ field.label }}</td>
+    <td>{{ field(**kwargs)|safe }}</td>
+    <td>{% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    </tr>
+{% endmacro %}
+
+{% block header %}
+    <h1>{% block title %}Room Create{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form action="{{ url_for("room.create") }}" method="post">
+    <table>
+        {{ render_field(form.room_name) }}
+        {{ render_field(form.room_location) }}
+        {{ render_field(form.room_capacity) }}
+        {{ render_field(form.computers) }}
+    </table>
+    <div>
+        <input class="buttons" type="submit" value="添加">
+        <input class="buttons" type="submit" formaction="{{ url_for('room.update') }}" formmethod="get" value="返回">
+    </div>
+    </form>
+{% endblock %}

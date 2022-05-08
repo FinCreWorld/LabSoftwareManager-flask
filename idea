@@ -1,0 +1,44 @@
+教师名字与手机号需要导入
+
+注册时需填写教师号
+
+Package                   Version  Editable project location
+------------------------- -------- -----------------------------------
+altgraph                  0.17.2
+atomicwrites              1.4.0
+attrs                     21.2.0
+click                     8.0.3
+colorama                  0.4.4
+coverage                  6.0.2
+Flask                     2.0.2
+Flask-SQLAlchemy          2.5.1
+Flask-WTF                 0.15.1
+flaskr                    1.0.0    d:\lectures\junior_0\database\flask
+future                    0.18.2
+greenlet                  1.1.2
+iniconfig                 1.1.1
+itsdangerous              2.0.1
+Jinja2                    3.0.2
+MarkupSafe                2.0.1
+numpy                     1.21.3
+packaging                 21.0
+pandas                    1.3.4
+pefile                    2021.9.3
+pip                       21.3
+pluggy                    1.0.0
+py                        1.10.0
+pyinstaller               4.6
+pyinstaller-hooks-contrib 2021.3
+PyMySQL                   1.0.2
+pyparsing                 2.4.7
+pytest                    6.2.5
+python-dateutil           2.8.2
+pytz                      2021.3
+pywin32-ctypes            0.2.0
+setuptools                57.0.0
+six                       1.16.0
+SQLAlchemy                1.4.26
+toml                      0.10.2
+Werkzeug                  2.0.2
+wheel                     0.36.2
+WTForms                   2.3.3

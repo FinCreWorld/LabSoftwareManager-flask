@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Add Room{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form action="{{ url_for('softwares.add_room', _id=id) }}" method="post">
+    <div>
+        {% for row in room %}
+        <span class="select-block">
+        <input type="checkbox" name="{{ row['room_id'] }}">
+        <span>{{ row['room_name'] + ": " + row['room_location'] }}</span>
+        </span>
+    {% endfor %}
+    </div>
+    <div>
+    <input class="buttons" type="submit" value="提交">
+    <input class="buttons" type="submit" formaction="{{ url_for('softwares.view') }}" formmethod="get" value="返回">
+    </div>
+    </form>
+{% endblock %}

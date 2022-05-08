@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% macro render_td(row, attr) %}
+    <td>
+        {% if g.user == row['account_id'] %}
+            <input type="text" style="border: 0;" value="{{ row[attr] }}" name="{{ attr }}"></td>
+        {% else %}
+            <input type="text" style="border: 0;" readonly="readonly" value="{{ row[attr] }}"></td>
+        {% endif %}
+{% endmacro %}
+
+{% block header %}
+    <h1>{% block title %}Room{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<table>
+<tr>
+    <td>id</td>
+    <td>房间名</td>
+    <td>房间位置</td>
+    <td>房间容量</td>
+    <td>电脑型号</td>
+    <td>管理员</td>
+    <td>备注</td>
+    <td></td>
+</tr>
+{% for row in room_info %}
+    {% if g.user == row['account_id'] %}
+        <form action="{{ url_for('room.update') }}" method="post">
+    {% endif %}
+        <tr id="{{ row['room_id'] }}">
+        <td><input type="text" style="border: 0;" readonly="readonly"
+                   value="{{ row['room_id'] }}" name="room_id"/></td>
+        {{ render_td(row, 'room_name') }}
+        {{ render_td(row, 'room_location') }}
+        {{ render_td(row, 'room_capacity') }}
+        <td><input type="text" style="border: 0;" readonly="readonly" value="{{ row['computer_model'] }}"></td>
+        <td><input type="text" style="border: 0;" readonly="readonly" value="{{ row['teacher_name'] }}"></td>
+        {{ render_td(row, 'room_notes') }}
+    {% if g.user == row['account_id'] %}
+        <td>
+        <span>
+        <input type="submit" value="修改"  onclick="return confirm('确定修改吗?');">
+        <input type="submit" value="删除" formaction="{{ url_for('room.delete') }}"
+               formmethod="post" onclick="return confirm('确定删除吗?');">
+        </span>
+        </td>
+        </form>
+    {% endif %}
+    </tr>
+{% endfor %}
+</table>
+    <form action="{{ url_for('room.create') }}" method="get">
+    <div >
+        <input class="buttons" type="submit" value="新建">
+        <input class="buttons" type="submit" value="房间总览" formaction="{{ url_for('room.view') }}" formmethod="get">
+    </div>
+    </form>
+{% endblock %}

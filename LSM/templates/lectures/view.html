@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% macro render_td(row, attr, fix) %}
+    {% if g.user == 1 and fix == 0 %}
+        <td ><input type="text" style="border: 0" value="{{ row[attr] }}" name="{{ attr }}"></td>
+    {% else %}
+        <td><input type="text" style="border: 0" readonly="readonly" value="{{ row[attr] }}"></td>
+    {% endif %}
+{% endmacro %}
+
+{% block header %}
+    <h1>{% block title %}Lectures{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+    <style>
+    input {
+        width: 100%;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+<table>
+<tr>
+    <td></td>
+    <td>学院</td>
+    <td>课程名</td>
+    <td>课程教师</td>
+    <td>课程学时</td>
+    <td>总人数</td>
+    <td>每班人数</td>
+    <td>上课地点</td>
+    <td>所需软件</td>
+    <td>学期</td>
+    <td>备注</td>
+</tr>
+{% for row in v %}
+    <tr>
+    <form action="{{ url_for('lectures.view') }}" method="post">
+    <td><input hidden="hidden" name="lectures_id" value={{ row['lectures_id'] }}></td>
+    {{ render_td(row, "department_name", 1) }}
+    {{ render_td(row, "lectures_name", 0) }}
+    {{ render_td(row, "lectures_teachers", 0) }}
+    {{ render_td(row, "lectures_hours", 0) }}
+    {{ render_td(row, "lectures_total_num", 0) }}
+    {{ render_td(row, "lectures_class_num", 0) }}
+    {{ render_td(row, "room_location", 1) }}
+    {{ render_td(row, "lectures_software", 0) }}
+    {{ render_td(row, "lectures_semester", 0) }}
+    {{ render_td(row, "lectures_notes", 0) }}
+    <td><input type="submit" value="修改" onclick="return confirm('确定修改吗?');"></td>
+    </form>
+    </tr>
+{% endfor %}
+</table>
+<form enctype="multipart/form-data" action="{{ url_for('lectures.upload') }}" method="post">
+<input class="buttons" type="file" name="lectures">
+<input class="buttons" type="submit" value="批量添加">
+</form>
+{% endblock %}

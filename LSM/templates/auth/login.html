@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Log In{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+    <div style="text-align: center; margin: 100px auto 100px;">
+        <div style="margin: 10px;">
+        <label for="username" style="font-size: 18px;font-weight: lighter;">账号</label>
+        <input style="margin-left: 10px; border: 0;background-color: #f6f5ed;height: 27px;" name="username" id="username" required>
+        </div>
+        <div style="margin: 10px">
+        <label for="password" style="font-size: 18px;font-weight: lighter;">密码</label>
+        <input style="margin-left: 10px; border: 0;background-color: #f6f5ed;height: 27px;"type="password" name="password" id="password" required>
+        </div>
+        <input class="buttons" type="submit" value="登录" style="margin-top: 30px; font-size: 17px">
+    </div>
+    </form>
+{% endblock %}

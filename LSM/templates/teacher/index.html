@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% macro render_td(row, attr, fix) %}
+    {% if g.pri == 1 and fix == 0 %}
+        <td ><input type="text" style="border: 0" value="{{ row[attr] }}" name="{{ attr }}"></td>
+    {% else %}
+        <td><input type="text" style="border: 0" readonly="readonly" value="{{ row[attr] }}" name="{{ attr }}"></td>
+    {% endif %}
+{% endmacro %}
+
+{% block header %}
+    <h1>{% block title %}Teacher{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+    <style>
+    input {
+        width: 100%;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+<table>
+<tr>
+    <td>账号 id</td>
+    <td>账号名</td>
+    {% if g.pri == 1 %}
+        <td>账号权限</td>
+    {% endif %}
+    <td>教师 id</td>
+    <td>教师姓名</td>
+    <td>教师电话</td>
+</tr>
+{% for row in teacher_info %}
+<tr>
+    <form action="{{ url_for('teacher.index') }}" method="post">
+
+    {{ render_td(row, "account_id", 1) }}
+    {{ render_td(row, "account_name", 1) }}
+    {% if g.pri == 1 %}
+        {% if row['account_priviledge'] %}
+        {{ render_td(row, "account_priviledge", 0) }}
+        {% else %}
+        {{ render_td(row, "account_priviledge", 1) }}
+        {% endif %}
+    {% endif %}
+    {{ render_td(row, "teacher_id", 1) }}
+    {{ render_td(row, "teacher_name", 1) }}
+    {{ render_td(row, "teacher_phone", 1) }}
+    <td><input type="submit" value="修改权限" onclick="return confirm('确定修改吗?');"></td>
+    <td><input type="submit" value="删除" onclick="return confirm('确定删除该账号吗?');"
+            formaction="{{ url_for('teacher.delete') }}" formmethod="post"></td>
+    </form>
+</tr>
+{% endfor %}
+</table>
+<form action="{{ url_for('teacher.add') }}" method="post" style="margin: 20px auto auto;width: 200px;text-align: center">
+<span>教师名称</span><input type="text" name="teacher_name">
+<span>电话号码</span><input type="tel" name="teacher_phone">
+<input class="buttons" type="submit" value="添加">
+</form>
+<form enctype="multipart/form-data" action="{{ url_for('teacher.upload') }}" method="post">
+<input class="buttons" type="file" name="teachers">
+<input class="buttons" type="submit" value="批量添加">
+</form>
+{% endblock %}

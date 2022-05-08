@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Softwares{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+    <style>
+    td {
+        width: 150px;
+        word-break: break-all;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<table>
+<tr>
+    <td>软件类型</td>
+    <td>软件名称</td>
+    <td>配置要求</td>
+    <td>软件描述</td>
+    <td>软件备注</td>
+    <td>房间</td>
+    <td></td>
+</tr>
+{% for row in v %}
+<form action="{{ url_for('softwares.add_room', _id=row['software_id']) }}" method="get">
+<tr>
+    <td>{{ row['category_name'] }}</td>
+    <td>{{ row['software_name'] }}</td>
+    <td>{{ row['software_configuration'] }}</td>
+    <td>{{ row['software_description'] }}</td>
+    <td>{{ row['software_notes'] }}</td>
+    <td>{{ row['rooms'] }}</td>
+    <td>
+    <span>
+    <input type="submit" value="添加房间">
+    <input type="submit" value="删除" formaction="{{ url_for('softwares.delete', s_id=row['software_id']) }}" formmethod="get">
+    </span>
+    </td>
+</tr>
+</form>
+{% endfor %}
+</table>
+<form action="{{ url_for('softwares.add') }}" method="get" >
+<input class="buttons" value="添加软件" type="submit">
+</form>
+{% endblock %}

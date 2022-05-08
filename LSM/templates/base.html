@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+    <h1>实验室软件管理平台</h1>
+    <ul>
+        <li><a href="{{ url_for('room.view') }}">房间</a> </li>
+        <li><a href="{{ url_for('computer.index') }}">电脑</a></li>
+        <li><a href="{{ url_for('lectures.view') }}">课程</a></li>
+        <li><a href="{{ url_for('softwares.view') }}">软件</a></li>
+        <li><a href="{{ url_for('teacher.index') }}">教师</a></li>
+        {% if g.user %}
+            <li><span>{{ g.user['username'] }}</span></li>
+            <li><a href="{{ url_for('auth.logout') }}">退出登录</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.register') }}">注册</a></li>
+            <li><a href="{{ url_for('auth.login') }}">登录</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<section class="content">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</section>

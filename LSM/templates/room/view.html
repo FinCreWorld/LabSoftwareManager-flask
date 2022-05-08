@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Room{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<table>
+<tr>
+    <td>房间名</td>
+    <td>管理员</td>
+    <td>教室容量</td>
+    <td>电脑型号</td>
+    <td>电脑配置</td>
+    <td>操作系统1</td>
+    <td>操作系统2</td>
+    <td>安装软件</td>
+    <td>课程</td>
+    <td>备注</td>
+</tr>
+{% for row in v %}
+    <tr>
+    <td>{{ row['room_name'] }}</td>
+    <td>{{ row['teacher_name'] }}</td>
+    <td>{{ row['room_capacity'] }}</td>
+    <td>{{ row['computer_model'] }}</td>
+    <td style="height: auto;"><pre>{{ row['computer_config'] }}</pre></td>
+    <td>{{ row['computer_os1'] }}</td>
+    <td>{{ row['os2'] }}</td>
+    <td>{{ row['software_list'] }}</td>
+    <td>{{ row['lectures_list'] }}</td>
+    <td>{{ row['room_notes'] }}</td>
+    </tr>
+{% endfor %}
+</table>
+    <form action="{{ url_for("room.update") }}" method="get">
+    <input class="buttons" type="submit" value="房间管理">
+    </form>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% macro render_td(row, attr, fix) %}
+    {% if g.pri == 1 and fix == 0 %}
+        <td ><input type="text" style="border: 0" value="{{ row[attr] }}" name="{{ attr }}"></td>
+    {% else %}
+        <td><input type="text" style="border: 0" readonly="readonly" value="{{ row[attr] }}"></td>
+    {% endif %}
+{% endmacro %}
+
+{% block header %}
+    <h1>{% block title %}Computer{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+    <style>
+    input {
+        width: 100%;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+<table>
+<tr>
+    <td></td>
+    <td>电脑型号</td>
+    <td>内存</td>
+    <td>cpu</td>
+    <td>gpu</td>
+    <td>磁盘</td>
+    <td>磁盘剩余容量</td>
+    <td>操作系统1</td>
+    <td>操作系统2</td>
+</tr>
+{% for row in computer_info %}
+<tr>
+<form action="{{ url_for('computer.index') }}" method="post">
+    <td><input value="{{ row['computer_id'] }}" name="computer_id" hidden="hidden"></td>
+    {{ render_td(row, "computer_model", 0) }}
+    {{ render_td(row, "computer_memory", 0) }}
+    {{ render_td(row, "computer_cpu", 0) }}
+    {{ render_td(row, "computer_gpu", 0) }}
+    {{ render_td(row, "computer_disk", 0) }}
+    {{ render_td(row, "computer_disk_used", 0) }}
+    {{ render_td(row, "computer_os1", 0) }}
+    {{ render_td(row, "computer_os2", 0) }}
+    <td><input type="submit" value="修改" onclick="return confirm('确定修改吗?');"></td>
+    <td><input type="submit" value="删除" onclick="return confirm('确定删除吗?');"
+            formaction="{{ url_for('computer.delete') }}" formmethod="post"></td>
+    </form>
+</form>
+</tr>
+{% endfor %}
+</table>
+    <form action="{{ url_for('computer.add') }}" method="get">
+    <input class="buttons" type="submit" value="新建">
+    </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% macro render_item(title, type, name) %}
+    <td>{{ title }}</td><td><input type="{{ type }}" name="{{ name }}"></td>
+{% endmacro %}
+
+{% block header %}
+    <h1>{% block title %}Room Create{% endblock %}</h1>
+    {% if g.user %}
+        <div class="user id">{{ g.user }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<form action="{{ url_for('computer.add') }}" method="post">
+<table>
+    <tr>{{ render_item("型号", "text", "computer_model") }}</tr>
+    <tr>{{ render_item("内存", "number", "computer_memory") }}</tr>
+    <tr>{{ render_item("cpu", "text", "computer_cpu") }}</tr>
+    <tr>{{ render_item("gpu", "text", "computer_gpu") }}</tr>
+    <tr>{{ render_item("总磁盘空间", "number", "computer_disk") }}</tr>
+    <tr>{{ render_item("已使用磁盘", "number", "computer_disk_used") }}</tr>
+    <tr>{{ render_item("操作系统1", "text", "computer_os1") }}</tr>
+    <tr>{{ render_item("操作系统2", "text", "computer_os2") }}</tr>
+</table>
+<input class="buttons" type="submit" value="添加">
+<input class="buttons" type="submit" value="返回" formaction="{{ url_for("computer.index") }}" formmethod="get">
+</form>
+{% endblock %}
